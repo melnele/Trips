@@ -43,25 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     .setAvailableProviders(providers)
                     .build(), RC_SIGN_IN);
         } else {
-            SectionsStateAdapter sectionsStateAdapter = new SectionsStateAdapter(this);
-
-            ViewPager2 viewPager = findViewById(R.id.view_pager);
-            viewPager.setAdapter(sectionsStateAdapter);
-            TabLayout tabs = findViewById(R.id.tabs);
-
-            new TabLayoutMediator(tabs, viewPager,
-                    (tab, position) -> tab.setText(TAB_TITLES[position])
-            ).attach();
-
-            FloatingActionButton fab = findViewById(R.id.fab);
-
-            fab.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            });
+            setUI();
         }
     }
 
@@ -73,25 +55,7 @@ public class MainActivity extends AppCompatActivity {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
             if (resultCode == RESULT_OK) {
-                SectionsStateAdapter sectionsStateAdapter = new SectionsStateAdapter(this);
-
-                ViewPager2 viewPager = findViewById(R.id.view_pager);
-                viewPager.setAdapter(sectionsStateAdapter);
-                TabLayout tabs = findViewById(R.id.tabs);
-
-                new TabLayoutMediator(tabs, viewPager,
-                        (tab, position) -> tab.setText(TAB_TITLES[position])
-                ).attach();
-
-                FloatingActionButton fab = findViewById(R.id.fab);
-
-                fab.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
-                });
+                setUI();
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -99,5 +63,27 @@ public class MainActivity extends AppCompatActivity {
                 // ...
             }
         }
+    }
+
+    private void setUI() {
+        SectionsStateAdapter sectionsStateAdapter = new SectionsStateAdapter(this);
+
+        ViewPager2 viewPager = findViewById(R.id.view_pager);
+        viewPager.setAdapter(sectionsStateAdapter);
+        TabLayout tabs = findViewById(R.id.tabs);
+
+        new TabLayoutMediator(tabs, viewPager,
+                (tab, position) -> tab.setText(TAB_TITLES[position])
+        ).attach();
+
+        FloatingActionButton fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 }

@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.trips.R;
@@ -15,10 +13,6 @@ public class SectionsStateAdapter extends FragmentStateAdapter {
 
     @StringRes
     public static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
-
-    public SectionsStateAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle) {
-        super(fragmentManager, lifecycle);
-    }
 
     public SectionsStateAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -37,6 +31,4 @@ public class SectionsStateAdapter extends FragmentStateAdapter {
         // Show 2 total pages.
         return 2;
     }
-
-
 }

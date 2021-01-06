@@ -1,5 +1,6 @@
 package com.example.trips.ui.main;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,7 @@ public class PlaceholderFragment extends Fragment {
         pageViewModel.setIndex(index);
     }
 
+    @SuppressLint("FragmentLiveDataObserve")
     @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
