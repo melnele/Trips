@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Trips</string>
+    <string name="tab_text_1">الرحلات القادمة</string>
+    <string name="tab_text_2">الرحلات السابقة</string>
+    <string name="trip_name_textView">اسم الرحلة</string>
+    <string name="start_point">نقطة البداية</string>
+    <string name="end_point">نقطة الوصول</string>
+    <string name="details">التفاصيل</string>
+    <string name="add_trip">إضافة رحلة</string>
+    <string name="your_date">تاريخ الرحلة</string>
+    <string name="your_time">موعد الرحلة</string>
+    <string name="name">الاسم</string>
+    <string name="upcoming">رحلة قادمة</string>
+    <string name="date">التاريخ</string>
+    <string name="time">الوقت</string>
+</resources>
