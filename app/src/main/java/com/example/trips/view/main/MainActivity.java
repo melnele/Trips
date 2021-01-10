@@ -1,13 +1,13 @@
-package com.example.trips;
+package com.example.trips.view.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.trips.ui.main.SectionsStateAdapter;
+import com.example.trips.R;
+import com.example.trips.view.addtrip.CreateTripItem;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.example.trips.ui.main.SectionsStateAdapter.TAB_TITLES;
+import static com.example.trips.view.main.SectionsStateAdapter.TAB_TITLES;
 
 public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1000;
@@ -81,8 +81,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, CreateTripItem.class);
+                startActivity(intent);
+
             }
         });
     }

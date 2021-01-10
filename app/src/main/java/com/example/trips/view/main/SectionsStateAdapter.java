@@ -1,4 +1,4 @@
-package com.example.trips.ui.main;
+package com.example.trips.view.main;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;

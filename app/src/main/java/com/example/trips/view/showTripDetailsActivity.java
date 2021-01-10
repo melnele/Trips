@@ -1,8 +1,10 @@
-package com.example.trips;
+package com.example.trips.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.trips.R;
 
 public class showTripDetailsActivity extends AppCompatActivity {
 

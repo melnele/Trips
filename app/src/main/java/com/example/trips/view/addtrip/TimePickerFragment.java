@@ -1,4 +1,4 @@
-package com.example.trips;
+package com.example.trips.view.addtrip;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
@@ -15,10 +15,10 @@ public class TimePickerFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        Calendar c= Calendar.getInstance();
-        int hour =c.get(Calendar.HOUR);
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR);
         int minute = c.get(Calendar.MINUTE);
 
-        return new TimePickerDialog(getActivity(),(TimePickerDialog.OnTimeSetListener)getActivity(),hour,minute,DateFormat.is24HourFormat(getActivity()));
+        return new TimePickerDialog(getActivity(), (TimePickerDialog.OnTimeSetListener) getActivity(), hour, minute, DateFormat.is24HourFormat(getActivity()));
     }
 }
