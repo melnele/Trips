@@ -1,5 +1,26 @@
 <resources>
     <string name="app_name">Trips</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_text_1">Upcoming Trips</string>
+    <string name="tab_text_2">Past Trips</string>
+    <string name="trip_name_textView">Trip name</string>
+    <string name="start_point">Start Point</string>
+    <string name="end_point">End Point</string>
+    <string name="start_details">Start Details</string>
+    <string name="add_trip">Add Trip</string>
+    <string name="your_date">Your Date</string>
+    <string name="your_time">Your Time</string>
+    <string-array name="ways">
+        <item>One Way Trip</item>
+        <item>Round Trip</item>
+    </string-array>
+    <string-array name="repitition">
+        <item>No Repeat</item>
+        <item>Repeat Daily</item>
+        <item>Repeat Weekly</item>
+        <item>Repeat Monthly</item>
+    </string-array>
+    //the API_KEY for google place
+    <string name="api_key">AIzaSyD__pcj8uGgXIzF1FIGCu5sk36roBjdDco</string>
+
+
 </resources>
