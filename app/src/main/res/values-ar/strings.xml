@@ -14,4 +14,6 @@
     <string name="upcoming">رحلة قادمة</string>
     <string name="date">التاريخ</string>
     <string name="time">الوقت</string>
+    <string name="edit">تعديل</string>
+    <string name="add_notes">اضافة ملاحظات</string>
 </resources>

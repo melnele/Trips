@@ -1,20 +1,24 @@
 package com.example.trips.model;
 
-import com.google.android.libraries.places.api.model.Place;
-
+import java.io.Serializable;
 import java.util.Date;
 
-public class Trip {
+public class Trip implements Serializable {
+    private String id;
     private String name;
-    private Place startPoint;
-    private Place endPoint;
+    private Address startPoint;
+    private Address endPoint;
     private Date time;
-    private int status = 0; // Upcoming = 0, Done = 1, Cancelled = 2
+    private TripStatus status = TripStatus.UPCOMING;
     private int repetition = 0; //Bonus
     private String[] notes;
     private Boolean roundTrip = false; //One Direction: false or Round Trip: true
 
-    public Trip(String name, Place startPoint, Place endPoint, Date time) {
+    public Trip() {
+    }
+
+    public Trip(String id, String name, Address startPoint, Address endPoint, Date time) {
+        this.id = id;
         this.name = name;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -29,19 +33,19 @@ public class Trip {
         this.name = name;
     }
 
-    public Place getStartPoint() {
+    public Address getStartPoint() {
         return startPoint;
     }
 
-    public void setStartPoint(Place startPoint) {
+    public void setStartPoint(Address startPoint) {
         this.startPoint = startPoint;
     }
 
-    public Place getEndPoint() {
+    public Address getEndPoint() {
         return endPoint;
     }
 
-    public void setEndPoint(Place endPoint) {
+    public void setEndPoint(Address endPoint) {
         this.endPoint = endPoint;
     }
 
@@ -53,11 +57,11 @@ public class Trip {
         this.time = time;
     }
 
-    public int getStatus() {
+    public TripStatus getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(TripStatus status) {
         this.status = status;
     }
 

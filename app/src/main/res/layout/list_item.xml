@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/nameTextViewItem"
+        android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/upcomingTextViewItem"
+        android:id="@+id/tripStatusTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -28,7 +28,6 @@
         android:text="@string/upcoming"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/timeTextView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -41,7 +40,7 @@
         android:text="@string/date"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextViewItem" />
+        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
 
     <TextView
         android:id="@+id/timeTextView"
@@ -53,7 +52,7 @@
         android:text="@string/time"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upcomingTextViewItem" />
+        app:layout_constraintTop_toBottomOf="@+id/tripStatusTextView" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -66,13 +65,13 @@
         app:srcCompat="@drawable/iconslocation" />
 
     <TextView
-        android:id="@+id/startPountTextView"
+        android:id="@+id/startPointTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:fontFamily="sans-serif-black"
         android:text="@string/start_point"
         android:textSize="20sp"
-        android:fontFamily="sans-serif-black"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
@@ -81,11 +80,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:text="@string/end_point"
-        android:textSize="20sp"
         android:layout_marginTop="10dp"
         android:fontFamily="sans-serif-black"
-        app:layout_constraintTop_toBottomOf="@id/startPountTextView"
+        android:text="@string/end_point"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintStart_toEndOf="@+id/imageView2" />
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@id/startPointTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,9 +10,11 @@
     <string name="your_date">Trip Date</string>
     <string name="your_time">Trip Time</string>
     <string name="name">Name</string>
-    <string name="upcoming">Upcomnig Trip</string>
+    <string name="upcoming">Upcoming Trip</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="edit">Edit</string>
+    <string name="add_notes">Add Notes</string>
     <string-array name="ways">
         <item>One Way Trip</item>
         <item>Round Trip</item>
@@ -24,7 +26,7 @@
         <item>Repeat Monthly</item>
     </string-array>
     //the API_KEY for google place
-    <string name="api_key" translatable="false">AIzaSyD__pcj8uGgXIzF1FIGCu5sk36roBjdDco</string>
+    <string name="api_key" translatable="false">AIzaSyCzhf4Wu7t1dJqhAIo1SO5RqjlPwtYjTQE</string>
 
 
 </resources>
