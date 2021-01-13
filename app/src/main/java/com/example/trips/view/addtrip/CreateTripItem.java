@@ -137,7 +137,7 @@ public class CreateTripItem extends AppCompatActivity implements DatePickerDialo
         btnAddTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                getPermission();
+              getPermission();
                 // TODO Validate input
                 FirebaseDatabase database = DBUtil.getDB();
                 DatabaseReference myRef = database.getReference()
@@ -146,7 +146,7 @@ public class CreateTripItem extends AppCompatActivity implements DatePickerDialo
                 Trip t = new Trip(myRef.getKey(), tripNameEditText.getText().toString(), startAddress, endAddress, date.getTime());
                 myRef.keepSynced(true);
                 myRef.setValue(t);
-//                startAlarm(date);
+                startAlarm(date);
 
                 finish();
             }
@@ -170,5 +170,33 @@ public class CreateTripItem extends AppCompatActivity implements DatePickerDialo
         date.set(Calendar.MILLISECOND, 0);
         String time = hourOfDay + ":" + minute;
         timeText.setText(time);
+    }
+
+    //Permission for the over screen
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == permission_request_code) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+                Toast.makeText(this, "Permission denied by the user", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public void getPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+            startActivityForResult(intent, permission_request_code);
+        }
+    }
+
+    private void startAlarm(Calendar c) {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), AlertActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, 0);
+        if (c.before(Calendar.getInstance())) {
+            c.add(Calendar.DATE, 1);
+        }
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, c.getTimeInMillis(), pendingIntent);
     }
 }
