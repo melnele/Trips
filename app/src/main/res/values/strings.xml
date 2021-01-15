@@ -5,7 +5,7 @@
     <string name="trip_name_textView">Trip name</string>
     <string name="start_point">Start Point</string>
     <string name="end_point">End Point</string>
-    <string name="details">Details</string>
+    <string name="more_details">More Details</string>
     <string name="add_trip">Add Trip</string>
     <string name="your_date">Trip Date</string>
     <string name="your_time">Trip Time</string>
@@ -15,6 +15,10 @@
     <string name="time">Time</string>
     <string name="edit">Edit</string>
     <string name="add_notes">Add Notes</string>
+    <string name="create_trip">Create a Trip</string>
+    <string name="trip_details">Trip Details</string>
+    <string name="edit_trip_details">Edit Trip Details</string>
+    <string name="round_trip">Round Trip</string>
     <string-array name="ways">
         <item>One Way Trip</item>
         <item>Round Trip</item>
@@ -27,6 +31,11 @@
     </string-array>
     //the API_KEY for google place
     <string name="api_key" translatable="false">AIzaSyCzhf4Wu7t1dJqhAIo1SO5RqjlPwtYjTQE</string>
+    <string name="add_note">Add Your Note.</string>
+    <string name="add_your_notes">Add Your Notes</string>
+    <string name="add_up_to">You Can Add Up To Ten Notes</string>
+    <string name="add_a_note">Add a Note</string>
+    <string name="save_notes">Save Notes</string>
 
 
 </resources>

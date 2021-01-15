@@ -1,163 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.addtrip.CreateTripItem">
+    android:background="@color/quantum_amber50">
 
-    <TextView
-        android:id="@+id/tripNameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/trip_name_textView"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/tripNameEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tripNameTextView" />
-
-    <TextView
-        android:id="@+id/tripNameTextView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/start_point"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tripNameEditText" />
-
-    <fragment
-        android:id="@+id/place_autocomplete_fragment_start_point"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tripNameTextView2"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
+        android:layout_height="match_parent"
+        android:background="@color/quantum_amber50"
+        android:orientation="vertical"
+        tools:context=".view.addtrip.CreateTripItem">
 
-    <TextView
-        android:id="@+id/end_point_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/end_point"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/place_autocomplete_fragment_start_point" />
+            <TextView
+                android:layout_gravity="center"
+                style="@style/font_style"
+                android:drawableLeft="@drawable/iconsluggage30"
+                android:text="@string/create_trip" />
 
-    <fragment
-        android:id="@+id/place_autocomplete_fragment_end_point"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/end_point_textView"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
+        <TextView
+            android:id="@+id/tripNameTextView"
+            style="@style/font_style"
+            android:drawableLeft="@drawable/iconspencil30"
+            android:text="@string/trip_name_textView" />
 
-    <Button
-        android:id="@+id/btnAddTrip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_trip"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/tripNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:inputType="textPersonName"
+            />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/details"
-        android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/place_autocomplete_fragment_end_point" />
+        <TextView
+            android:id="@+id/tripNameTextView2"
+            style="@style/font_style"
+            android:drawableLeft="@drawable/iconslocationupdate30"
+            android:text="@string/start_point" />
 
-    <ImageView
-        android:id="@+id/calendarImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/calendar" />
+        <fragment
+            android:id="@+id/place_autocomplete_fragment_start_point"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
-    <TextView
-        android:id="@+id/showDateTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/your_date"
-        android:layout_marginTop="30dp"
-        android:textSize="20sp"
-        android:fontFamily="sans-serif-black"
-        app:layout_constraintStart_toEndOf="@+id/calendarImageView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        <TextView
+            android:id="@+id/end_point_textView"
+            style="@style/font_style"
+            android:drawableLeft="@drawable/iconslocationupdate30"
+            android:text="@string/end_point" />
 
-    <ImageView
-        android:id="@+id/timeImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/calendarImageView"
-        app:layout_constraintStart_toEndOf="@+id/showDateTextView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:srcCompat="@drawable/iconstime" />
+        <fragment
+            android:id="@+id/place_autocomplete_fragment_end_point"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
-    <TextView
-        android:id="@+id/showTimeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/your_time"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/timeImageView"
-        app:layout_constraintTop_toTopOf="@+id/showDateTextView" />
+        <TextView
+            android:id="@+id/textView"
+            style="@style/font_style"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:drawableLeft="@drawable/iconsviewdetails30"
+            android:layout_marginBottom="50dp"
+            android:text="@string/more_details" />
 
-    <Spinner
-        android:id="@+id/spinnerWays"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="160dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddTrip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarImageView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
 
-    <Spinner
-        android:id="@+id/spinnerRepeat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnAddTrip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerWays" />
+            <ImageView
+                android:id="@+id/calendarImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/iconscalendar70" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/showDateTextView"
+                style="@style/font_style"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                android:text="@string/your_date" />
+
+            <ImageView
+                android:id="@+id/timeImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="10dp"
+                app:srcCompat="@drawable/iconsclock70" />
+
+            <TextView
+                android:id="@+id/showTimeTextView"
+                style="@style/font_style"
+                android:layout_gravity="center"
+                android:text="@string/your_time" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/iconsarrows70"/>
+            <CheckBox
+                android:id="@+id/roundTripCheckBox"
+                style="@style/font_style"
+                android:layout_marginBottom="30dp"
+                android:text="Round Trip" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAddTrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/add_trip"
+            android:textAppearance="?android:textAppearanceLarge"
+            />
+
+    </LinearLayout>
+</ScrollView>

@@ -50,7 +50,6 @@ public class CreateTripItem extends AppCompatActivity implements DatePickerDialo
     private final int permission_request_code = 100;
     private TextView dateText, timeText, tripNameEditText;
     private Address startAddress, endAddress;
-    private Spinner spinnerWay, spinnerRepeat;
     private Button btnAddTrip;
     private Calendar date;
 
@@ -60,18 +59,7 @@ public class CreateTripItem extends AppCompatActivity implements DatePickerDialo
         setContentView(R.layout.activity_create_trip_item);
         date = Calendar.getInstance();
         //for spinners
-        spinnerWay = findViewById(R.id.spinnerWays);
-        spinnerRepeat = findViewById(R.id.spinnerRepeat);
         tripNameEditText = findViewById(R.id.tripNameEditText);
-
-        ArrayAdapter<CharSequence> adapterWay = ArrayAdapter.createFromResource(this, R.array.ways, android.R.layout.simple_spinner_item);
-        ArrayAdapter<CharSequence> adapterRepeat = ArrayAdapter.createFromResource(this, R.array.repitition, android.R.layout.simple_spinner_item);
-
-        adapterWay.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterRepeat.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinnerWay.setAdapter(adapterWay);
-        spinnerRepeat.setAdapter(adapterRepeat);
         //for date and time
         dateText = findViewById(R.id.showDateTextView);
         timeText = findViewById(R.id.showTimeTextView);

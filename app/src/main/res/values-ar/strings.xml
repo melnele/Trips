@@ -6,7 +6,7 @@
     <string name="trip_name_textView">اسم الرحلة</string>
     <string name="start_point">نقطة البداية</string>
     <string name="end_point">نقطة الوصول</string>
-    <string name="details">التفاصيل</string>
+    <string name="more_details">المزيد من التفاصيل</string>
     <string name="add_trip">إضافة رحلة</string>
     <string name="your_date">تاريخ الرحلة</string>
     <string name="your_time">موعد الرحلة</string>
@@ -16,4 +16,13 @@
     <string name="time">الوقت</string>
     <string name="edit">تعديل</string>
     <string name="add_notes">اضافة ملاحظات</string>
+    <string name="add_note">اضف ملاحظتك</string>
+    <string name="add_your_notes">اضف ملاحظاتك</string>
+    <string name="add_up_to">يمكنك إضافة حتى عشر ملاحظات</string>
+    <string name="add_a_note">اضف ملاحظة</string>
+    <string name="save_notes">احفظ الملاحظات</string>
+    <string name="create_trip">قم بإضافة رحلة</string>
+    <string name="trip_details">تفاصيل الرحلة</string>
+    <string name="edit_trip_details">تعديل تفاصيل الرحلة</string>
+    <string name="round_trip">ذهابا وإيابا</string>
 </resources>
