@@ -1,7 +1,9 @@
 package com.example.trips.model;
 
+import java.io.Serializable;
+
 public
-class LatLong {
+class LatLong implements Serializable {
     public double latitude;
     public double longitude;
 
@@ -27,5 +29,10 @@ class LatLong {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    @Override
+    public String toString() {
+        return latitude + "," + longitude;
     }
 }

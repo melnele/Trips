@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/quantum_amber50"
         android:orientation="vertical"
-        tools:context=".NoteActivity">
+        tools:context=".view.trip.NoteActivity">
 
 
         <TextView
@@ -39,6 +39,7 @@
             android:orientation="vertical"></LinearLayout>
 
         <Button
+            android:id="@+id/saveNotesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

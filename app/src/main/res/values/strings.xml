@@ -19,23 +19,19 @@
     <string name="trip_details">Trip Details</string>
     <string name="edit_trip_details">Edit Trip Details</string>
     <string name="round_trip">Round Trip</string>
-    <string-array name="ways">
-        <item>One Way Trip</item>
-        <item>Round Trip</item>
-    </string-array>
+    <string name="add_note">Add Your Note.</string>
+    <string name="add_your_notes">Add Your Notes</string>
+    <string name="add_up_to">You Can Add Up To Ten Notes</string>
+    <string name="add_a_note">Add a Note</string>
+    <string name="save_notes">Save Notes</string>
+    <string name="delete">Delete</string>
+    <string name="start">Start</string>
     <string-array name="repitition">
         <item>No Repeat</item>
         <item>Repeat Daily</item>
         <item>Repeat Weekly</item>
         <item>Repeat Monthly</item>
     </string-array>
-    //the API_KEY for google place
-    <string name="api_key" translatable="false">AIzaSyCzhf4Wu7t1dJqhAIo1SO5RqjlPwtYjTQE</string>
-    <string name="add_note">Add Your Note.</string>
-    <string name="add_your_notes">Add Your Notes</string>
-    <string name="add_up_to">You Can Add Up To Ten Notes</string>
-    <string name="add_a_note">Add a Note</string>
-    <string name="save_notes">Save Notes</string>
 
-
+    <string name="api_key" translatable="false">AIzaSyDYOqNd-As1cvDHc0tlGfc4tKBsbVRHU8I</string>
 </resources>

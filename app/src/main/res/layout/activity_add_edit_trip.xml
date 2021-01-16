@@ -11,27 +11,30 @@
         android:layout_height="wrap_content"
         android:background="@color/quantum_amber50"
         android:orientation="vertical"
-        tools:context=".view.addtrip.CreateTripItem">
+        tools:context=".view.trip.AddEditTripActivity">
 
         <TextView
-            android:layout_gravity="center"
+            android:id="@+id/titleTextView"
             style="@style/font_style"
-            android:text="@string/trip_details"
-            app:drawableLeftCompat="@drawable/iconscar30" />
+            android:layout_gravity="center"
+            android:text="@string/create_trip"
+            app:drawableLeftCompat="@drawable/iconsluggage30" />
 
         <TextView
             android:id="@+id/tripNameTextView"
             style="@style/font_style"
             android:text="@string/trip_name_textView"
-            app:drawableLeftCompat="@drawable/iconspencil30" />
+            app:drawableLeftCompat="@drawable/iconspencil30"
+            android:labelFor="@id/tripNameEditText"/>
 
         <EditText
             android:id="@+id/tripNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:importantForAutofill="no"
             android:inputType="textPersonName"
-            />
+            android:textColor="@color/teal_700" />
 
         <TextView
             android:id="@+id/tripNameTextView2"
@@ -71,8 +74,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
             android:layout_gravity="center"
+            android:layout_marginBottom="40dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -80,15 +83,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="10dp"
                 app:srcCompat="@drawable/iconscalendar70" />
 
             <TextView
                 android:id="@+id/showDateTextView"
                 style="@style/font_style"
                 android:layout_gravity="center"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/your_date" />
 
             <ImageView
@@ -96,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"
                 app:srcCompat="@drawable/iconsclock70" />
 
             <TextView
@@ -110,17 +113,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/iconsarrows70"/>
+                android:src="@drawable/iconsarrows70" />
+
             <CheckBox
                 android:id="@+id/roundTripCheckBox"
                 style="@style/font_style"
                 android:layout_marginBottom="30dp"
-                android:text="Round Trip" />
+                android:text="@string/round_trip" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/btnAddTrip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/add_trip"
+            android:textAppearance="?android:textAppearanceLarge" />
 
     </LinearLayout>
 </ScrollView>

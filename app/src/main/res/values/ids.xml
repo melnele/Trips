@@ -2,4 +2,6 @@
 <resources>
     <item name="ctx_menu_edit_trip" type="id" />
     <item name="ctx_menu_add_notes" type="id" />
+    <item name="ctx_menu_start_trip" type="id" />
+    <item name="ctx_menu_delete" type="id" />
 </resources>

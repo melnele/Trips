@@ -1,7 +1,7 @@
 package com.example.trips.view.main;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,20 +18,28 @@ import com.example.trips.R;
 import com.example.trips.model.Trip;
 import com.example.trips.model.TripStatus;
 import com.example.trips.utils.DBUtil;
+import com.example.trips.view.trip.NoteActivity;
+import com.example.trips.view.trip.AddEditTripActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+
+import static com.example.trips.view.main.TripsAdapter.TRIP;
+import static com.example.trips.view.trip.AddEditTripActivity.EDIT_TRIP;
+import static com.example.trips.view.trip.AddEditTripActivity.TRIP_ACTION;
 
 public class TripsListFragment extends Fragment {
 
     private int section;
     private RecyclerView recyclerView;
-    private SwipeRefreshLayout swiperefresh;
+    private SwipeRefreshLayout swipeRefresh;
     private TripsAdapter adapter;
 
     public static TripsListFragment newInstance(int index) {
@@ -52,29 +60,41 @@ public class TripsListFragment extends Fragment {
         recyclerView.scrollToPosition(0);
         registerForContextMenu(recyclerView);
 
-        swiperefresh = root.findViewById(R.id.swiperefresh);
-        swiperefresh.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        getTrips();
-                    }
-                }
-        );
+        swipeRefresh = root.findViewById(R.id.swipeRefresh);
+        swipeRefresh.setOnRefreshListener(this::getTrips);
 
         return root;
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        int position = adapter.getPosition();
-        switch (item.getItemId()) {
-            case R.id.ctx_menu_add_notes:
-                Log.i("TAG", "onContextItemSelected: " + position);
-                break;
-            case R.id.ctx_menu_edit_trip:
-                Log.i("TAG", "onContextItemSelected: " + position);
-                break;
+        Trip trip = adapter.getCurrTrip();
+        Intent intent;
+        int itemId = item.getItemId();
+        if (itemId == R.id.ctx_menu_add_notes) {
+            intent = new Intent(getContext(), NoteActivity.class);
+            intent.putExtra(TRIP, trip);
+            startActivity(intent);
+        } else if (itemId == R.id.ctx_menu_edit_trip) {
+            intent = new Intent(getContext(), AddEditTripActivity.class);
+            intent.putExtra(TRIP_ACTION, EDIT_TRIP);
+            intent.putExtra(TRIP, trip);
+            startActivity(intent);
+        } else if (itemId == R.id.ctx_menu_delete) {
+            //TODO confirmation dialog
+            //TODO remove alarm
+            FirebaseDatabase database = DBUtil.getDB();
+            DatabaseReference myRef = database.getReference()
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child("trips").child(trip.getId());
+            myRef.removeValue();
+            getTrips();
+        } else if (itemId == R.id.ctx_menu_start_trip) {
+            //TODO
+//            intent = new Intent(getContext(), AddEditTripActivity.class);
+//            intent.putExtra(TRIP_ACTION, EDIT_TRIP);
+//            intent.putExtra(TRIP, trip);
+//            startActivity(intent);
         }
         return super.onContextItemSelected(item);
     }
@@ -87,15 +107,16 @@ public class TripsListFragment extends Fragment {
 
     private void getTrips() {
         FirebaseDatabase database = DBUtil.getDB();
-        Query myRef = database.getReference()
+        DatabaseReference myRef = database.getReference()
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                 .child("trips");
         myRef.keepSynced(true);
 
         ArrayList<Trip> trips = new ArrayList<>();
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 for (DataSnapshot tripSnapshot : dataSnapshot.getChildren()) {
@@ -109,7 +130,7 @@ public class TripsListFragment extends Fragment {
                 }
                 adapter.setTrips(trips);
                 myRef.removeEventListener(this);
-                swiperefresh.setRefreshing(false);
+                swipeRefresh.setRefreshing(false);
                 recyclerView.scrollToPosition(0);
             }
 
@@ -118,7 +139,7 @@ public class TripsListFragment extends Fragment {
                 // Failed to read value
                 Toast.makeText(getContext(), "There was an error connecting to the database.", Toast.LENGTH_SHORT).show();
                 myRef.removeEventListener(this);
-                swiperefresh.setRefreshing(false);
+                swipeRefresh.setRefreshing(false);
                 recyclerView.scrollToPosition(0);
             }
         });

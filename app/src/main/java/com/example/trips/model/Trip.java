@@ -1,7 +1,9 @@
 package com.example.trips.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Trip implements Serializable {
     private String id;
@@ -11,7 +13,7 @@ public class Trip implements Serializable {
     private Date time;
     private TripStatus status = TripStatus.UPCOMING;
     private int repetition = 0; //Bonus
-    private String[] notes;
+    private ArrayList<String> notes;
     private Boolean roundTrip = false; //One Direction: false or Round Trip: true
 
     public Trip() {
@@ -23,6 +25,14 @@ public class Trip implements Serializable {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.time = time;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -73,11 +83,11 @@ public class Trip implements Serializable {
         this.repetition = repetition;
     }
 
-    public String[] getNotes() {
+    public List<String> getNotes() {
         return notes;
     }
 
-    public void setNotes(String[] notes) {
+    public void setNotes(ArrayList<String> notes) {
         this.notes = notes;
     }
 
@@ -87,5 +97,18 @@ public class Trip implements Serializable {
 
     public void setRoundTrip(Boolean roundTrip) {
         this.roundTrip = roundTrip;
+    }
+
+    @Override
+    public String toString() {
+        return "Trip{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", startPoint=" + startPoint +
+                ", endPoint=" + endPoint +
+                ", time=" + time +
+                ", status=" + status +
+                ", roundTrip=" + roundTrip +
+                '}';
     }
 }

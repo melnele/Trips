@@ -27,6 +27,6 @@ public class SectionsStateAdapter extends FragmentStateAdapter {
     @Override
     public int getItemCount() {
         // Show 2 total pages.
-        return 2;
+        return TAB_TITLES.length;
     }
 }

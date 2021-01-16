@@ -1,7 +1,8 @@
 package com.example.trips.view.main;
 
 
-import android.util.Log;
+import android.content.Context;
+import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,21 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.trips.R;
 import com.example.trips.model.Trip;
+import com.example.trips.view.trip.TripDetailsActivity;
 
 import java.text.DateFormat;
 import java.util.List;
 
 public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> {
+    public final static String TRIP = "TRIP";
     private List<Trip> trips;
     private final int list_item_id;
-    private int position;
+    private Trip currTrip;
 
-    public int getPosition() {
-        return position;
+    public Trip getCurrTrip() {
+        return currTrip;
     }
 
-    public void setPosition(int position) {
-        this.position = position;
+    public void setCurrTrip(Trip currTrip) {
+        this.currTrip = currTrip;
     }
 
     public TripsAdapter(int resource) {
@@ -65,8 +68,17 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                setPosition(position);
+                setCurrTrip(trips.get(position));
                 return false;
+            }
+        });
+        Context context = holder.itemView.getContext();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, TripDetailsActivity.class);
+                intent.putExtra(TRIP, trips.get(position));
+                context.startActivity(intent);
             }
         });
     }
@@ -74,6 +86,7 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
     @Override
     public void onViewRecycled(@NonNull ViewHolder holder) {
         holder.itemView.setOnLongClickListener(null);
+        holder.itemView.setOnClickListener(null);
         super.onViewRecycled(holder);
     }
 
@@ -97,14 +110,10 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
                 @Override
                 public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 //                    menu.setHeaderTitle("Select The Action");
-                    menu.add(Menu.NONE, R.id.ctx_menu_edit_trip, Menu.NONE, R.string.edit);//groupId, itemId, order, title
+                    menu.add(Menu.NONE, R.id.ctx_menu_start_trip, Menu.NONE, R.string.start);
+                    menu.add(Menu.NONE, R.id.ctx_menu_edit_trip, Menu.NONE, R.string.edit);
+                    menu.add(Menu.NONE, R.id.ctx_menu_delete, Menu.NONE, R.string.delete);
                     menu.add(Menu.NONE, R.id.ctx_menu_add_notes, Menu.NONE, R.string.add_notes);
-                }
-            });
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Log.i("TAG", "Element " + getAdapterPosition() + " clicked.");
                 }
             });
 

@@ -1,4 +1,4 @@
-package com.example.trips.view.addtrip;
+package com.example.trips.view.trip;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

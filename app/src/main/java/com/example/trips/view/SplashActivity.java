@@ -33,6 +33,7 @@ public class SplashActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -46,7 +47,9 @@ public class SplashActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
+                finish();
             } else {
+                //TODO handel sign in errors and put sign out option
                 if (response == null) {
 //                    List<AuthUI.IdpConfig> providers = Arrays.asList(
 //                            new AuthUI.IdpConfig.EmailBuilder().build(),
