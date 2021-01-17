@@ -7,6 +7,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,36 +39,43 @@ public class AlertActivity extends AppCompatActivity {
             trip = (Trip) bundle.getSerializable(TRIP);
         }
         if (trip == null) {
-            Log.i("TAG", trip.toString());
+
 
             finish();
             return;
         }
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
+        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
+
+        r.play();
         new AlertDialog.Builder(this)
                 .setMessage(trip.getName())
                 .setPositiveButton("Start", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        r.stop();
                         Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatLong().toString());
                         Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                         mapIntent.setPackage("com.google.android.apps.maps");
                         startActivity(mapIntent);
-
+                        Intent bubbleIntent = new Intent(getApplicationContext(), BubbleService.class);
+                        startService(bubbleIntent);
                         finish();
 
-//                        Intent bubbleIntent = new Intent(getApplicationContext(), BubbleService.class);
-//                        startService(bubbleIntent);
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        r.stop();
                         finish();
                     }
                 })
                 .setNeutralButton("Later", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        r.stop();
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             createChannel();
                         }
