@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -85,53 +84,80 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
             return;
         }
 
-        btnAddTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getPermission();
-                // TODO Validate input
-                if (startAddress == null) {
-                    Toast.makeText(getApplicationContext(), "start location is required", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (endAddress == null) {
-                    Toast.makeText(getApplicationContext(), "end location is required", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (!dateSet) {
-                    Toast.makeText(getApplicationContext(), "date is required", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (!timeSet) {
-                    Toast.makeText(getApplicationContext(), "time is required", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+        btnAddTrip.setOnClickListener(v -> {
+            getPermission();
+            if (startAddress == null) {
+                Toast.makeText(getApplicationContext(), "start location is required", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (endAddress == null) {
+                Toast.makeText(getApplicationContext(), "end location is required", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (!dateSet) {
+                Toast.makeText(getApplicationContext(), "date is required", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (!timeSet) {
+                Toast.makeText(getApplicationContext(), "time is required", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            FirebaseDatabase database = DBUtil.getDB();
+            DatabaseReference myRef = database.getReference()
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child("trips").push();
+            trip = new Trip(myRef.getKey(), tripNameEditText.getText().toString(), startAddress, endAddress, date.getTime());
+            trip.setRoundTrip(roundTripCheckBox.isChecked());
+            myRef.keepSynced(true);
+            myRef.setValue(trip);
+            startAlarm();
+
+            finish();
+        });
+    }
+
+    private void setEditView() {
+        trip = (Trip) getIntent().getSerializableExtra(TRIP);
+        if (trip != null) {
+            ((TextView) findViewById(R.id.titleTextView)).setText(R.string.edit_trip_details);
+            btnAddTrip.setText(R.string.edit);
+            Date time = trip.getTime();
+            date.setTime(time);
+            tripNameEditText.setText(trip.getName());
+            roundTripCheckBox.setChecked(trip.getRoundTrip());
+            dateText.setText(DateFormat.getDateInstance().format(time));
+            timeText.setText(DateFormat.getTimeInstance((DateFormat.SHORT)).format(time));
+            autocompleteFragment1.setText(trip.getStartPoint().getName());
+            autocompleteFragment2.setText(trip.getEndPoint().getName());
+            btnAddTrip.setOnClickListener(v -> {
                 FirebaseDatabase database = DBUtil.getDB();
                 DatabaseReference myRef = database.getReference()
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                        .child("trips").push();
-                trip = new Trip(myRef.getKey(), tripNameEditText.getText().toString(), startAddress, endAddress, date.getTime());
+                        .child("trips").child(trip.getId());
+                trip.setName(tripNameEditText.getText().toString());
+                if (startAddress != null) {
+                    trip.setStartPoint(startAddress);
+                }
+                if (endAddress != null) {
+                    trip.setEndPoint(endAddress);
+                }
+                if (dateSet || timeSet) {
+                    trip.setTime(date.getTime());
+                }
                 trip.setRoundTrip(roundTripCheckBox.isChecked());
-                myRef.keepSynced(true);
                 myRef.setValue(trip);
                 startAlarm();
 
                 finish();
-            }
-        });
+            });
+        }
     }
 
     private void initDateTime() {
-        findViewById(R.id.timeImageView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment timePicker = new TimePickerFragment();
-                timePicker.show(getSupportFragmentManager(), "time picker");
-            }
+        findViewById(R.id.timeImageView).setOnClickListener(v -> {
+            DialogFragment timePicker = new TimePickerFragment();
+            timePicker.show(getSupportFragmentManager(), "time picker");
         });
-        findViewById(R.id.calendarImageView).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment datePicker = new DatePickerFragment();
-                datePicker.show(getSupportFragmentManager(), "date picker");
-            }
+        findViewById(R.id.calendarImageView).setOnClickListener(v -> {
+            DialogFragment datePicker = new DatePickerFragment();
+            datePicker.show(getSupportFragmentManager(), "date picker");
         });
     }
 
@@ -151,42 +177,8 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
         date.set(Calendar.MINUTE, minute);
         date.set(Calendar.SECOND, 0);
         date.set(Calendar.MILLISECOND, 0);
-        String time = hourOfDay + ":" + minute;
-        timeText.setText(time);
+        timeText.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(date.getTime()));
         timeSet = true;
-    }
-
-    private void setEditView() {
-        trip = (Trip) getIntent().getSerializableExtra(TRIP);
-        if (trip != null) {
-            ((TextView) findViewById(R.id.titleTextView)).setText(R.string.edit_trip_details);
-            btnAddTrip.setText(R.string.edit);
-            Date time = trip.getTime();
-            date.setTime(time);
-            tripNameEditText.setText(trip.getName());
-            roundTripCheckBox.setChecked(trip.getRoundTrip());
-            dateText.setText(DateFormat.getDateInstance().format(time));
-            timeText.setText(DateFormat.getTimeInstance().format(time));
-            autocompleteFragment1.setText(trip.getStartPoint().getName());
-            autocompleteFragment2.setText(trip.getEndPoint().getName());
-            btnAddTrip.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    getPermission();
-//                    // TODO Validate input
-//                    FirebaseDatabase database = DBUtil.getDB();
-//                    DatabaseReference myRef = database.getReference()
-//                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                            .child("trips").push();
-//                    Trip t = new Trip(myRef.getKey(), tripNameEditText.getText().toString(), startAddress, endAddress, date.getTime());
-//                    myRef.keepSynced(true);
-//                    myRef.setValue(t);
-//                    startAlarm(date);
-//
-//                    finish();
-                }
-            });
-        }
     }
 
     private void initPlaces() {
@@ -205,9 +197,7 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
 
         autocompleteFragment1.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
         autocompleteFragment2.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG));
-        if (trip != null) {
 
-        }
         autocompleteFragment1.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
@@ -250,6 +240,7 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
     }
 
     public void getPermission() {
+        // TODO ask
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
             startActivityForResult(intent, permission_request_code);
@@ -263,7 +254,7 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
         bundle.putSerializable(TRIP, trip);
         intent.putExtra(TRIP, bundle);
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), trip.getId().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         if (date.after(Calendar.getInstance())) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
         }

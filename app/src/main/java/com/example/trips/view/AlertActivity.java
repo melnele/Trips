@@ -12,7 +12,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -21,6 +20,11 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.trips.R;
 import com.example.trips.model.Trip;
+import com.example.trips.model.TripStatus;
+import com.example.trips.utils.DBUtil;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.trips.view.main.TripsAdapter.TRIP;
 
@@ -28,7 +32,6 @@ public class AlertActivity extends AppCompatActivity {
     public static final String channelID = "channelID";
     public static final String channelName = "Channel Name";
     private NotificationManager mManager;
-    private int openedBefore = 0;
     private Trip trip;
 
     @Override
@@ -39,40 +42,31 @@ public class AlertActivity extends AppCompatActivity {
             trip = (Trip) bundle.getSerializable(TRIP);
         }
         if (trip == null) {
-
-
             finish();
             return;
         }
-        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
 
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), notification);
         r.play();
+
         new AlertDialog.Builder(this)
                 .setMessage(trip.getName())
-                .setPositiveButton("Start", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        r.stop();
-                        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatLong().toString());
-                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                        mapIntent.setPackage("com.google.android.apps.maps");
-                        startActivity(mapIntent);
-                        Intent bubbleIntent = new Intent(getApplicationContext(), BubbleService.class);
-                        startService(bubbleIntent);
-                        finish();
-
-
-                    }
+                .setPositiveButton(R.string.start, (dialog, which) -> {
+                    r.stop();
+                    startTrip();
+                    finish();
                 })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        r.stop();
-                        finish();
-                    }
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                    r.stop();
+                    FirebaseDatabase database = DBUtil.getDB();
+                    DatabaseReference myRef = database.getReference()
+                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child("trips").child(trip.getId()).child("status");
+                    myRef.setValue(TripStatus.CANCELLED);
+                    finish();
                 })
-                .setNeutralButton("Later", new DialogInterface.OnClickListener() {
+                .setNeutralButton(R.string.later, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         r.stop();
@@ -106,5 +100,24 @@ public class AlertActivity extends AppCompatActivity {
                         mManager.createNotificationChannel(channel);
                     }
                 }).create().show();
+    }
+
+    private void startTrip() {
+        FirebaseDatabase database = DBUtil.getDB();
+        DatabaseReference myRef = database.getReference()
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("trips").child(trip.getId()).child("status");
+        myRef.setValue(TripStatus.DONE);
+
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatLong().toString());
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+
+        if (trip.getNotes() != null) {
+            Intent bubbleIntent = new Intent(getApplicationContext(), BubbleService.class);
+            bubbleIntent.putExtra(TRIP, trip);
+            startService(bubbleIntent);
+        }
     }
 }

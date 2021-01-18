@@ -3,31 +3,40 @@ package com.example.trips.view;
 import android.app.Service;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
 import com.example.trips.R;
+import com.example.trips.model.Trip;
 
 import java.util.Calendar;
 
+import static com.example.trips.view.main.TripsAdapter.TRIP;
+
 public class BubbleService extends Service {
-    int LAYOUT_FLAG;
-    View mFloatingView;
-    WindowManager windowManager;
-    ImageView imageClose;
-    float height,width;
-    View collapsedView;
-    View expandedView;
-    Boolean expanded;
+    private View mFloatingView;
+    private WindowManager windowManager;
+    private ImageView imageClose;
+    private float height, width;
+    private View collapsedView;
+    private View expandedView;
+    private Boolean expanded;
+    private Trip trip;
+    private LinearLayout noteList;
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -36,85 +45,103 @@ public class BubbleService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        trip = (Trip) intent.getSerializableExtra(TRIP);
+        if (trip == null) {
+            stopSelf();
+            return START_NOT_STICKY;
+        }
 
-        }else{
+        int LAYOUT_FLAG;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
         }
         // inflate the layout
-        mFloatingView = LayoutInflater.from( this ).inflate( R.layout.bubble,null );
+        mFloatingView = LayoutInflater.from(this).inflate(R.layout.bubble, null);
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT
-                , WindowManager.LayoutParams.WRAP_CONTENT,LAYOUT_FLAG,WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT );
+                , WindowManager.LayoutParams.WRAP_CONTENT, LAYOUT_FLAG, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
         //initial position
-        layoutParams.gravity = Gravity.TOP|Gravity.RIGHT;
-        layoutParams.x=0;
-        layoutParams.y=100;
+        layoutParams.gravity = Gravity.TOP | Gravity.END;
+        layoutParams.x = 0;
+        layoutParams.y = 100;
 
         //layout params for close button
-        WindowManager.LayoutParams imageParams = new WindowManager.LayoutParams(140,140,LAYOUT_FLAG, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,PixelFormat.TRANSLUCENT );
-        imageParams.gravity = Gravity.BOTTOM|Gravity.CENTER;
+        WindowManager.LayoutParams imageParams = new WindowManager.LayoutParams(140, 140, LAYOUT_FLAG, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
+        imageParams.gravity = Gravity.BOTTOM | Gravity.CENTER;
         imageParams.y = 100;
-        windowManager =(WindowManager) getSystemService( WINDOW_SERVICE );
-        imageClose = new ImageView( this );
-        imageClose.setImageResource( R.drawable.x );
-        imageClose.setVisibility( View.INVISIBLE );
-        windowManager.addView( imageClose,imageParams );
-        windowManager.addView( mFloatingView,layoutParams );
-        mFloatingView.setVisibility( View.VISIBLE );
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        imageClose = new ImageView(this);
+        imageClose.setImageResource(R.drawable.x);
+        imageClose.setVisibility(View.INVISIBLE);
+        windowManager.addView(imageClose, imageParams);
+        windowManager.addView(mFloatingView, layoutParams);
+        mFloatingView.setVisibility(View.VISIBLE);
 
         collapsedView = mFloatingView.findViewById(R.id.icon_container);
-
         expandedView = mFloatingView.findViewById(R.id.expanded_container);
+        noteList = mFloatingView.findViewById(R.id.note_layout);
+        if (trip.getNotes() != null) {
+            for (String note : trip.getNotes()) {
+                CheckBox checkBox = new CheckBox(this);
+                checkBox.setText(note);
+                noteList.addView(checkBox);
+            }
+        }
 
+//        height = windowManager.getDefaultDisplay().getHeight();
+//        width = windowManager.getDefaultDisplay().getWidth();
 
-        height=windowManager.getDefaultDisplay().getHeight();
-        width=windowManager.getDefaultDisplay().getWidth();
+//        DisplayMetrics displayMetrics = new DisplayMetrics();
+//        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+//        height = displayMetrics.heightPixels;
+//        width = displayMetrics.widthPixels;
 
+        Point size = new Point();
+        windowManager.getDefaultDisplay().getSize(size);
+        height = size.y;
+        width = size.x;
 
-        TextView closeButtonCollapsed =  mFloatingView.findViewById(R.id.trip); //to close the table
+        TextView closeButtonCollapsed = mFloatingView.findViewById(R.id.trip); //to close the table
         closeButtonCollapsed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                expandedView.setVisibility( view.GONE );
-                collapsedView.setVisibility( view.VISIBLE );
+                expandedView.setVisibility(View.GONE);
+                collapsedView.setVisibility(View.VISIBLE);
             }
         });
 
         //drag movement for the bubble
-
-
-        mFloatingView.setOnTouchListener( new View.OnTouchListener() {
-            int initialX,initialY;
-            float initialTouchX,initialTouchY;
+        mFloatingView.setOnTouchListener(new View.OnTouchListener() {
+            int initialX, initialY;
+            float initialTouchX, initialTouchY;
             long startClickTime;
-            int MAX_CLICK_DURATION = 200;
-
+            final int MAX_CLICK_DURATION = 200;
 
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                switch ((motionEvent.getAction())){
+                switch ((motionEvent.getAction())) {
                     case MotionEvent.ACTION_DOWN:
                         startClickTime = Calendar.getInstance().getTimeInMillis();
-                        imageClose.setVisibility( View.VISIBLE );
-                        initialX=layoutParams.x;
-                        initialY=layoutParams.y;
+                        imageClose.setVisibility(View.VISIBLE);
+                        initialX = layoutParams.x;
+                        initialY = layoutParams.y;
 
                         //touch position
                         initialTouchX = motionEvent.getRawX();
                         initialTouchY = motionEvent.getRawY();
                         return true;
 
-
                     case MotionEvent.ACTION_UP:
-                        long clickDuration = Calendar.getInstance().getTimeInMillis()-startClickTime;
-                        imageClose.setVisibility( View.GONE );
+                        view.performClick();
+                        long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
+                        imageClose.setVisibility(View.GONE);
 
-                        layoutParams.x = initialX+(int)(initialTouchX-motionEvent.getRawX());
-                        layoutParams.y = initialY+(int)(motionEvent.getRawY()-initialTouchY);
+                        layoutParams.x = initialX + (int) (initialTouchX - motionEvent.getRawX());
+                        layoutParams.y = initialY + (int) (motionEvent.getRawY() - initialTouchY);
 
-                        if(!(clickDuration<MAX_CLICK_DURATION)){
-                            if(layoutParams.y>(height*0.6)){
+                        if (!(clickDuration < MAX_CLICK_DURATION)) {
+                            if (layoutParams.y > (height * 0.6)) {
                                 stopSelf();
                             }
                         }
@@ -127,41 +154,32 @@ public class BubbleService extends Service {
                                 //and expanded view will become visible.
                                 collapsedView.setVisibility(View.GONE);
                                 expandedView.setVisibility(View.VISIBLE);
-                                expanded=true;
-
+                                expanded = true;
                             }
                         }
-
                         return true;
-
 
                     case MotionEvent.ACTION_MOVE:
                         //calculate x & y coordinates of view
-                        layoutParams.x = initialX+(int)(initialTouchX-motionEvent.getRawX());
-                        layoutParams.y = initialY+(int)(motionEvent.getRawY()-initialTouchY);
+                        layoutParams.x = initialX + (int) (initialTouchX - motionEvent.getRawX());
+                        layoutParams.y = initialY + (int) (motionEvent.getRawY() - initialTouchY);
 
                         //update layout with new coordinates
-                        windowManager.updateViewLayout (mFloatingView,layoutParams) ;
+                        windowManager.updateViewLayout(mFloatingView, layoutParams);
 
-                        if(layoutParams.y > (height*0.7)){
-                            imageClose.setImageResource( R.drawable.iconsclose30 );
-                        }else{
-                            imageClose.setImageResource( R.drawable.x );
+                        if (layoutParams.y > (height * 0.7)) {
+                            imageClose.setImageResource(R.drawable.iconsclose30);
+                        } else {
+                            imageClose.setImageResource(R.drawable.x);
                         }
-
-
-
                         return true;
                 }
-
                 return false;
             }
-        } );
-
-
-
-        return  START_STICKY;
+        });
+        return START_STICKY;
     }
+
     private boolean isViewCollapsed() {
         return mFloatingView == null || mFloatingView.findViewById(R.id.icon_container).getVisibility() == View.VISIBLE;
     }
@@ -169,12 +187,11 @@ public class BubbleService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mFloatingView != null){
-            windowManager.removeView( (mFloatingView) );
-
+        if (mFloatingView != null) {
+            windowManager.removeView((mFloatingView));
         }
-        if(imageClose!=null){
-            windowManager.removeView( imageClose );
+        if (imageClose != null) {
+            windowManager.removeView(imageClose);
         }
     }
 }

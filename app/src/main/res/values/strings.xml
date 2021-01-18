@@ -10,11 +10,13 @@
     <string name="your_date">Trip Date</string>
     <string name="your_time">Trip Time</string>
     <string name="name">Name</string>
-    <string name="upcoming">Upcoming Trip</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="done">Done</string>
+    <string name="cancelled">Cancelled</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="edit">Edit</string>
-    <string name="add_notes">Add Notes</string>
+    <string name="notes">Notes</string>
     <string name="create_trip">Create a Trip</string>
     <string name="trip_details">Trip Details</string>
     <string name="edit_trip_details">Edit Trip Details</string>
@@ -26,6 +28,12 @@
     <string name="save_notes">Save Notes</string>
     <string name="delete">Delete</string>
     <string name="start">Start</string>
+    <string name="cancel">Cancel</string>
+    <string name="later">Later</string>
+    <string name="trip_notes">Trip Notes</string>
+    <string name="delete_trip">Confirm delete trip?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string-array name="repitition">
         <item>No Repeat</item>
         <item>Repeat Daily</item>

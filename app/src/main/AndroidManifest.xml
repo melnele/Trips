@@ -14,7 +14,8 @@
         android:theme="@style/Theme.Trips">
         <activity
             android:name=".view.SplashActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,11 +28,17 @@
             android:theme="@style/Theme.Trips.NoActionBar" />
         <activity
             android:name=".view.AlertActivity"
+            android:excludeFromRecents="true"
             android:launchMode="singleInstance"
+            android:noHistory="true"
             android:theme="@style/Theme.AppCompat.Translucent" />
         <activity android:name=".view.trip.TripDetailsActivity" />
         <activity android:name=".view.trip.AddEditTripActivity" />
         <activity android:name=".view.trip.NoteActivity" />
+
+        <service
+            android:name=".view.BubbleService"
+            android:enabled="true" />
     </application>
 
 </manifest>

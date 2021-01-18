@@ -44,21 +44,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.sync:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
-
-            case R.id.signOut:
-                FirebaseAuth.getInstance().signOut();
-                finish();
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.signOut) {
+            FirebaseAuth.getInstance().signOut();
+            finish();
+            return true;
         }
+        // If we got here, the user's action was not recognized.
+        // Invoke the superclass to handle it.
+        return super.onOptionsItemSelected(item);
     }
 
     private void setUI() {
@@ -67,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         ViewPager2 viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsStateAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
-
+        tabs.setTabIndicatorFullWidth(true);
         new TabLayoutMediator(tabs, viewPager,
                 (tab, position) -> tab.setText(TAB_TITLES[position])
         ).attach();
