@@ -15,7 +15,7 @@
     <string name="date">التاريخ</string>
     <string name="time">الوقت</string>
     <string name="edit">تعديل</string>
-    <string name="add_notes">اضف ملاحظات</string>
+    <string name="notes">ملاحظات</string>
     <string name="add_note">اضف ملاحظتك</string>
     <string name="add_your_notes">اضف ملاحظاتك</string>
     <string name="add_up_to">يمكنك إضافة حتى عشر ملاحظات</string>
@@ -27,4 +27,12 @@
     <string name="round_trip">ذهابا وإيابا</string>
     <string name="delete">مسح</string>
     <string name="start">بدأ</string>
+    <string name="trip_notes">ملاحظات الرحلة</string>
+    <string name="delete_trip">تأكيد مسح الرحلة</string>
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+    <string name="cancel">الغاء</string>
+    <string name="later">لاحقا</string>
+    <string name="done">انتهت</string>
+    <string name="cancelled">الغيت</string>
 </resources>

@@ -1,6 +1,11 @@
 package com.example.trips.view.main;
 
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,6 +23,8 @@ import com.example.trips.R;
 import com.example.trips.model.Trip;
 import com.example.trips.model.TripStatus;
 import com.example.trips.utils.DBUtil;
+import com.example.trips.view.AlertActivity;
+import com.example.trips.view.BubbleService;
 import com.example.trips.view.trip.NoteActivity;
 import com.example.trips.view.trip.AddEditTripActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,14 +43,16 @@ import static com.example.trips.view.trip.AddEditTripActivity.EDIT_TRIP;
 import static com.example.trips.view.trip.AddEditTripActivity.TRIP_ACTION;
 
 public class TripsListFragment extends Fragment {
-
     private int section;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefresh;
     private TripsAdapter adapter;
+    private boolean visible = false;
 
     public static TripsListFragment newInstance(int index) {
         TripsListFragment fragment = new TripsListFragment();
+        fragment.setRetainInstance(true);
+        fragment.setHasOptionsMenu(true);
         fragment.section = index;
         return fragment;
     }
@@ -58,7 +67,6 @@ public class TripsListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.scrollToPosition(0);
-        registerForContextMenu(recyclerView);
 
         swipeRefresh = root.findViewById(R.id.swipeRefresh);
         swipeRefresh.setOnRefreshListener(this::getTrips);
@@ -67,42 +75,65 @@ public class TripsListFragment extends Fragment {
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == R.id.sync) {
+            swipeRefresh.setRefreshing(true);
+            getTrips();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         Trip trip = adapter.getCurrTrip();
-        Intent intent;
+        if (!(isVisible() && visible) || trip == null) {
+            return super.onContextItemSelected(item);
+        }
         int itemId = item.getItemId();
         if (itemId == R.id.ctx_menu_add_notes) {
-            intent = new Intent(getContext(), NoteActivity.class);
+            Intent intent = new Intent(getContext(), NoteActivity.class);
             intent.putExtra(TRIP, trip);
             startActivity(intent);
         } else if (itemId == R.id.ctx_menu_edit_trip) {
-            intent = new Intent(getContext(), AddEditTripActivity.class);
+            Intent intent = new Intent(getContext(), AddEditTripActivity.class);
             intent.putExtra(TRIP_ACTION, EDIT_TRIP);
             intent.putExtra(TRIP, trip);
             startActivity(intent);
         } else if (itemId == R.id.ctx_menu_delete) {
-            //TODO confirmation dialog
-            //TODO remove alarm
-            FirebaseDatabase database = DBUtil.getDB();
-            DatabaseReference myRef = database.getReference()
-                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                    .child("trips").child(trip.getId());
-            myRef.removeValue();
-            getTrips();
+            new AlertDialog.Builder(getContext())
+                    .setMessage(R.string.delete_trip).setPositiveButton(R.string.yes, (dialog, which) -> {
+                FirebaseDatabase database = DBUtil.getDB();
+                DatabaseReference myRef = database.getReference()
+                        .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                        .child("trips").child(trip.getId());
+                myRef.removeValue();
+                removeAlarm(trip.getId());
+                getTrips();
+            }).setNegativeButton(R.string.no, (dialog, which) -> {
+
+            }).create().show();
+
         } else if (itemId == R.id.ctx_menu_start_trip) {
-            //TODO
-//            intent = new Intent(getContext(), AddEditTripActivity.class);
-//            intent.putExtra(TRIP_ACTION, EDIT_TRIP);
-//            intent.putExtra(TRIP, trip);
-//            startActivity(intent);
-        }
-        return super.onContextItemSelected(item);
+            removeAlarm(trip.getId());
+            startTrip(trip);
+        } else
+            return super.onContextItemSelected(item);
+        return true;
     }
 
     @Override
     public void onResume() {
-        super.onResume();
+        visible = true;
         getTrips();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        visible = false;
+        super.onPause();
     }
 
     private void getTrips() {
@@ -143,5 +174,33 @@ public class TripsListFragment extends Fragment {
                 recyclerView.scrollToPosition(0);
             }
         });
+    }
+
+    private void removeAlarm(String id) {
+        AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getContext(), AlertActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(getContext(), id.hashCode(), intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmManager.cancel(pendingIntent);
+        pendingIntent.cancel();
+    }
+
+    private void startTrip(Trip trip) {
+        FirebaseDatabase database = DBUtil.getDB();
+        DatabaseReference myRef = database.getReference()
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .child("trips").child(trip.getId()).child("status");
+        myRef.setValue(TripStatus.DONE);
+
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatLong().toString());
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+        startActivity(mapIntent);
+
+        if (trip.getNotes() != null) {
+            Intent bubbleIntent = new Intent(getContext(), BubbleService.class);
+            bubbleIntent.putExtra(TRIP, trip);
+            getActivity().startService(bubbleIntent);
+        }
     }
 }
