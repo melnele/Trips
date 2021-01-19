@@ -31,10 +31,10 @@
             android:id="@+id/tripNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:textAppearance="?android:textAppearanceLarge"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
-            android:textColor="@color/teal_700" />
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tripNameTextView2"
@@ -47,7 +47,7 @@
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            />
 
         <TextView
             android:id="@+id/end_point_textView"
@@ -60,7 +60,7 @@
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            />
 
         <TextView
             android:id="@+id/textView"
@@ -72,7 +72,7 @@
             app:drawableLeftCompat="@drawable/iconsviewdetails30" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="40dp"
@@ -81,11 +81,10 @@
             <ImageView
                 android:id="@+id/calendarImageView"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginStart="30dp"
+                android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/iconscalendar70" />
+                app:srcCompat="@drawable/iconscalendar70"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:id="@+id/showDateTextView"
@@ -98,7 +97,6 @@
                 android:id="@+id/timeImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:layout_marginEnd="10dp"
                 app:srcCompat="@drawable/iconsclock70" />
 
@@ -110,8 +108,9 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="horizontal">
 
             <ImageView
