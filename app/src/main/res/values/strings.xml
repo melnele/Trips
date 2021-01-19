@@ -34,6 +34,8 @@
     <string name="delete_trip">Confirm delete trip?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="permission_message">Allow Trips to display over other apps.</string>
+    <string name="permission_toast">The Application must have this permission for the alert functionality.</string>
     <string-array name="repitition">
         <item>No Repeat</item>
         <item>Repeat Daily</item>

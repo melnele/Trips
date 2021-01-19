@@ -1,8 +1,5 @@
 package com.example.trips.view.main;
 
-
-import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -65,28 +62,23 @@ public class TripsAdapter extends RecyclerView.Adapter<TripsAdapter.ViewHolder> 
         holder.endPointTextView.setText(trips.get(position).getEndPoint().getName());
 
         holder.itemView.setOnCreateContextMenuListener((menu, v, menuInfo) -> {
-            if (trips.get(position).getStatus().equals(TripStatus.UPCOMING))
+            if (trips.get(position).getStatus().equals(TripStatus.UPCOMING)) {
                 menu.add(Menu.NONE, R.id.ctx_menu_start_trip, Menu.NONE, R.string.start);
+                menu.add(Menu.NONE, R.id.ctx_menu_cancel_trip, Menu.NONE, R.string.cancel);
+            }
             menu.add(Menu.NONE, R.id.ctx_menu_edit_trip, Menu.NONE, R.string.edit);
-            menu.add(Menu.NONE, R.id.ctx_menu_delete, Menu.NONE, R.string.delete);
+            menu.add(Menu.NONE, R.id.ctx_menu_delete_trip, Menu.NONE, R.string.delete);
             menu.add(Menu.NONE, R.id.ctx_menu_add_notes, Menu.NONE, R.string.notes);
         });
         holder.itemView.setOnLongClickListener(v -> {
             setCurrTrip(trips.get(position));
             return false;
         });
-        Context context = holder.itemView.getContext();
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(context, TripDetailsActivity.class);
-            intent.putExtra(TRIP, trips.get(position));
-            context.startActivity(intent);
-        });
     }
 
     @Override
     public void onViewRecycled(@NonNull ViewHolder holder) {
         holder.itemView.setOnLongClickListener(null);
-        holder.itemView.setOnClickListener(null);
         holder.itemView.setOnCreateContextMenuListener(null);
         super.onViewRecycled(holder);
     }

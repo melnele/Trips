@@ -35,4 +35,6 @@
     <string name="later">لاحقا</string>
     <string name="done">انتهت</string>
     <string name="cancelled">الغيت</string>
+    <string name="permission_message">اسمح لرحلات بالعرض فوق التطبيقات الاخري</string>
+    <string name="permission_toast">التطبيق يحتاج إلي هذا الإذن لتفعيل خاصية التنبيه</string>
 </resources>
