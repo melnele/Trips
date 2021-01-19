@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.trips.R;
 import com.example.trips.model.Trip;
 import com.example.trips.model.TripStatus;
-import com.example.trips.view.trip.TripDetailsActivity;
 
 import java.text.DateFormat;
 import java.util.List;

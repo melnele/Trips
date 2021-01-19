@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/quantum_amber50">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/quantum_amber50"
+        android:orientation="vertical"
+        tools:context=".view.trip.NoteActivity">
+
+
+        <TextView
+            style="@style/font_style"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/add_up_to"
+            app:drawableLeftCompat="@drawable/iconsnote30" />
+
+
+        <TextView
+            android:id="@+id/plusTextView"
+            style="@style/font_style"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/add_a_note"
+            app:drawableLeftCompat="@drawable/iconsplus30" />
+
+
+        <LinearLayout
+            android:id="@+id/layout_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
+
+        <Button
+            android:id="@+id/saveNotesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="70dp"
+            android:background="#8F1D1D"
+            android:fontFamily="sans-serif-black"
+            android:text="@string/save_notes"
+            android:textSize="40sp" />
+
+    </LinearLayout>
+</ScrollView>
