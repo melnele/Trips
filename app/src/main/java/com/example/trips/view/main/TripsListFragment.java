@@ -67,6 +67,8 @@ public class TripsListFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.scrollToPosition(0);
+        if (section == 1)
+            root.findViewById(R.id.mapFragment).setVisibility(View.VISIBLE);
 
         swipeRefresh = root.findViewById(R.id.swipeRefresh);
         swipeRefresh.setOnRefreshListener(this::getTrips);
@@ -101,7 +103,7 @@ public class TripsListFragment extends Fragment {
             intent.putExtra(TRIP_ACTION, EDIT_TRIP);
             intent.putExtra(TRIP, trip);
             startActivity(intent);
-        } else if (itemId == R.id.ctx_menu_delete) {
+        } else if (itemId == R.id.ctx_menu_delete_trip) {
             new AlertDialog.Builder(getContext())
                     .setMessage(R.string.delete_trip).setPositiveButton(R.string.yes, (dialog, which) -> {
                 FirebaseDatabase database = DBUtil.getDB();
@@ -112,12 +114,18 @@ public class TripsListFragment extends Fragment {
                 removeAlarm(trip.getId());
                 getTrips();
             }).setNegativeButton(R.string.no, (dialog, which) -> {
-
             }).create().show();
-
         } else if (itemId == R.id.ctx_menu_start_trip) {
             removeAlarm(trip.getId());
             startTrip(trip);
+        } else if (itemId == R.id.ctx_menu_cancel_trip) {
+            FirebaseDatabase database = DBUtil.getDB();
+            DatabaseReference myRef = database.getReference()
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child("trips").child(trip.getId()).child("status");
+            myRef.setValue(TripStatus.CANCELLED);
+            removeAlarm(trip.getId());
+            getTrips();
         } else
             return super.onContextItemSelected(item);
         return true;
@@ -166,7 +174,7 @@ public class TripsListFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError error) {
+            public void onCancelled(@NotNull DatabaseError error) {
                 // Failed to read value
                 Toast.makeText(getContext(), "There was an error connecting to the database.", Toast.LENGTH_SHORT).show();
                 myRef.removeEventListener(this);

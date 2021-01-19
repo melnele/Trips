@@ -1,6 +1,7 @@
 package com.example.trips.view.trip;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -66,6 +67,7 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit_trip);
+        getPermission();
 
         date = Calendar.getInstance();
 
@@ -85,7 +87,6 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
         }
 
         btnAddTrip.setOnClickListener(v -> {
-            getPermission();
             if (startAddress == null) {
                 Toast.makeText(getApplicationContext(), "start location is required", Toast.LENGTH_SHORT).show();
                 return;
@@ -202,7 +203,7 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 LatLng latLng = place.getLatLng();
-                LatLong latLong = new LatLong(latLng.latitude, latLng.latitude);
+                LatLong latLong = new LatLong(latLng.latitude, latLng.longitude);
                 startAddress = new Address(place.getId(), place.getName(), latLong, place.getAddress());
             }
 
@@ -216,7 +217,7 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
             @Override
             public void onPlaceSelected(@NonNull Place place) {
                 LatLng latLng = place.getLatLng();
-                LatLong latLong = new LatLong(latLng.latitude, latLng.latitude);
+                LatLong latLong = new LatLong(latLng.latitude, latLng.longitude);
                 endAddress = new Address(place.getId(), place.getName(), latLong, place.getAddress());
             }
 
@@ -240,10 +241,14 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
     }
 
     public void getPermission() {
-        // TODO ask
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
-            startActivityForResult(intent, permission_request_code);
+            new AlertDialog.Builder(this)
+                    .setMessage(R.string.permission_message)
+                    .setPositiveButton(R.string.yes, (dialog, which) -> {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+                        startActivityForResult(intent, permission_request_code);
+                    })
+                    .setNegativeButton(R.string.no, (dialog, which) -> Toast.makeText(this, getString(R.string.permission_toast), Toast.LENGTH_SHORT).show()).create().show();
         }
     }
 

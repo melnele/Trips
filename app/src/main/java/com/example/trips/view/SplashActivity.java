@@ -49,21 +49,11 @@ public class SplashActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else {
-                //TODO handel sign in errors and put sign out option
                 if (response == null) {
-//                    List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                            new AuthUI.IdpConfig.EmailBuilder().build(),
-//                            new AuthUI.IdpConfig.GoogleBuilder().build());
-//
-//                    startActivityForResult(AuthUI.getInstance()
-//                            .createSignInIntentBuilder()
-//                            .setAvailableProviders(providers)
-//                            .build(), RC_SIGN_IN);
                 }
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
-                // ...
             }
         }
     }
