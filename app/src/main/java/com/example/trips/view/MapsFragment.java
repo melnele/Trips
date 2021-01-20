@@ -57,13 +57,14 @@ public class MapsFragment extends Fragment {
             myRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-                    googleMap.clear();
+                    boolean flag = false;
                     Random rnd = new Random();
                     LatLngBounds.Builder builder = new LatLngBounds.Builder();
                     for (DataSnapshot tripSnapshot : dataSnapshot.getChildren()) {
                         Trip trip = tripSnapshot.getValue(Trip.class);
                         if (trip != null) {
                             if (!trip.getStatus().equals(TripStatus.UPCOMING)) {
+                                flag = true;
                                 int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
                                 PolylineOptions options = new PolylineOptions().width(5).color(color).geodesic(true);
                                 LatLng s = new LatLng(trip.getStartPoint().getLatLong().latitude, trip.getStartPoint().getLatLong().longitude);
@@ -76,7 +77,8 @@ public class MapsFragment extends Fragment {
                             }
                         }
                     }
-                    googleMap.setOnMapLoadedCallback(() -> googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 20)));
+                    if (flag)
+                        googleMap.setOnMapLoadedCallback(() -> googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 20)));
                 }
 
                 @Override

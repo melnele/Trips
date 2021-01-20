@@ -50,6 +50,7 @@ public class SplashActivity extends AppCompatActivity {
                 finish();
             } else {
                 if (response == null) {
+                    finish();
                 }
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
