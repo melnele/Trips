@@ -68,15 +68,12 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = findViewById(R.id.fab);
 
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        fab.setOnClickListener(view -> {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-                Intent intent = new Intent(MainActivity.this, AddEditTripActivity.class);
-                intent.putExtra(TRIP_ACTION, ADD_TRIP);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(MainActivity.this, AddEditTripActivity.class);
+            intent.putExtra(TRIP_ACTION, ADD_TRIP);
+            startActivity(intent);
         });
     }
 }

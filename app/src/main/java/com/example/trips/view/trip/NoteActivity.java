@@ -1,5 +1,9 @@
 package com.example.trips.view.trip;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.trips.R;
 import com.example.trips.model.Trip;
 import com.example.trips.utils.DBUtil;
+import com.example.trips.view.AlertActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static com.example.trips.view.main.TripsAdapter.TRIP;
 
@@ -44,7 +50,7 @@ public class NoteActivity extends AppCompatActivity {
             if (layoutList.getChildCount() < 10) {
                 addView("");
             } else {
-                Toast.makeText(NoteActivity.this, "You Reached The Maximum of Notes Number.", Toast.LENGTH_LONG).show();
+                Toast.makeText(NoteActivity.this, getString(R.string.max_notes), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -61,6 +67,8 @@ public class NoteActivity extends AppCompatActivity {
                     .child("trips").child(trip.getId()).child("notes");
 
             myRef.setValue(notes);
+            trip.setNotes(notes);
+            startAlarm();
             finish();
         });
 
@@ -83,5 +91,19 @@ public class NoteActivity extends AppCompatActivity {
 
     private void removeView(View view) {
         layoutList.removeView(view);
+    }
+
+    private void startAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(getApplicationContext(), AlertActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(TRIP, trip);
+        intent.putExtra(TRIP, bundle);
+        Calendar date = Calendar.getInstance();
+        date.setTime(trip.getTime());
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), trip.getId().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (date.after(Calendar.getInstance())) {
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTimeInMillis(), pendingIntent);
+        }
     }
 }

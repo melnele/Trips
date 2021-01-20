@@ -23,17 +23,17 @@
         <TextView
             android:id="@+id/tripNameTextView"
             style="@style/font_style"
+            android:labelFor="@id/tripNameEditText"
             android:text="@string/trip_name_textView"
-            app:drawableLeftCompat="@drawable/iconspencil30"
-            android:labelFor="@id/tripNameEditText"/>
+            app:drawableLeftCompat="@drawable/iconspencil30" />
 
         <EditText
             android:id="@+id/tripNameEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:textAppearanceLarge"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
+            android:textAppearance="?android:textAppearanceLarge"
             android:textColor="@color/black" />
 
         <TextView
@@ -42,12 +42,11 @@
             android:text="@string/start_point"
             app:drawableLeftCompat="@drawable/iconslocationupdate30" />
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/place_autocomplete_fragment_start_point"
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/end_point_textView"
@@ -55,12 +54,11 @@
             android:text="@string/end_point"
             app:drawableLeftCompat="@drawable/iconslocationupdate30" />
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/place_autocomplete_fragment_end_point"
             android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/textView"
@@ -83,8 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                app:srcCompat="@drawable/iconscalendar70"
-                android:contentDescription="TODO" />
+                app:srcCompat="@drawable/iconscalendar70" />
 
             <TextView
                 android:id="@+id/showDateTextView"

@@ -6,11 +6,11 @@ import android.graphics.PixelFormat;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.IBinder;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -34,8 +34,6 @@ public class BubbleService extends Service {
     private View collapsedView;
     private View expandedView;
     private Boolean expanded;
-    private Trip trip;
-    private LinearLayout noteList;
 
     @Nullable
     @Override
@@ -45,7 +43,7 @@ public class BubbleService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        trip = (Trip) intent.getSerializableExtra(TRIP);
+        Trip trip = (Trip) intent.getSerializableExtra(TRIP);
         if (trip == null) {
             stopSelf();
             return START_NOT_STICKY;
@@ -58,7 +56,8 @@ public class BubbleService extends Service {
             LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
         }
         // inflate the layout
-        mFloatingView = LayoutInflater.from(this).inflate(R.layout.bubble, null);
+        final ViewGroup nullParent = null;
+        mFloatingView = LayoutInflater.from(this).inflate(R.layout.bubble, nullParent);
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams(WindowManager.LayoutParams.WRAP_CONTENT
                 , WindowManager.LayoutParams.WRAP_CONTENT, LAYOUT_FLAG, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT);
         //initial position
@@ -80,7 +79,7 @@ public class BubbleService extends Service {
 
         collapsedView = mFloatingView.findViewById(R.id.icon_container);
         expandedView = mFloatingView.findViewById(R.id.expanded_container);
-        noteList = mFloatingView.findViewById(R.id.note_layout);
+        LinearLayout noteList = mFloatingView.findViewById(R.id.note_layout);
         if (trip.getNotes() != null) {
             for (String note : trip.getNotes()) {
                 CheckBox checkBox = new CheckBox(this);
@@ -103,12 +102,9 @@ public class BubbleService extends Service {
         width = size.x;
 
         TextView closeButtonCollapsed = mFloatingView.findViewById(R.id.trip); //to close the table
-        closeButtonCollapsed.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                expandedView.setVisibility(View.GONE);
-                collapsedView.setVisibility(View.VISIBLE);
-            }
+        closeButtonCollapsed.setOnClickListener(view -> {
+            expandedView.setVisibility(View.GONE);
+            collapsedView.setVisibility(View.VISIBLE);
         });
 
         //drag movement for the bubble

@@ -15,6 +15,7 @@ import com.example.trips.R;
 import com.example.trips.model.Trip;
 import com.example.trips.model.TripStatus;
 import com.example.trips.utils.DBUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -34,7 +35,7 @@ import java.util.Random;
 
 public class MapsFragment extends Fragment {
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
          * Manipulates the map once available.
@@ -75,7 +76,7 @@ public class MapsFragment extends Fragment {
                             }
                         }
                     }
-//                    googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 10));
+                    googleMap.setOnMapLoadedCallback(() -> googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 20)));
                 }
 
                 @Override

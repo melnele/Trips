@@ -80,9 +80,9 @@ public class AlertActivity extends AppCompatActivity {
                                 22, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                         NotificationCompat.Builder mBuilder;
                         mBuilder = new NotificationCompat.Builder(getApplicationContext(), channelID);
-                        mBuilder.setContentText("Trip")
-                                .setContentTitle("You are waiting for trip ")
-                                .setSmallIcon(R.drawable.ic_launcher_background)
+                        mBuilder.setContentText(trip.getName())
+                                .setContentTitle(getString(R.string.notification_message))
+                                .setSmallIcon(R.drawable.app_logo)
                                 .setAutoCancel(true)
                                 .setOngoing(true)
                                 .setPriority(NotificationCompat.PRIORITY_MAX)
@@ -109,10 +109,21 @@ public class AlertActivity extends AppCompatActivity {
                 .child("trips").child(trip.getId()).child("status");
         myRef.setValue(TripStatus.DONE);
 
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatLong().toString());
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        startActivity(mapIntent);
+        Intent intent;
+        if (trip.getRoundTrip()) {
+            intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.google.com/maps/dir/" + trip.getStartPoint().getName() + "/" + trip.getEndPoint().getName() + "/" +
+                            trip.getStartPoint().getName()));
+        } else {
+            intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.google.com/maps/dir/" + trip.getStartPoint().getName() + "/" + trip.getEndPoint().getName()));
+        }
+        startActivity(intent);
+
+//        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatLong().toString());
+//        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//        mapIntent.setPackage("com.google.android.apps.maps");
+//        startActivity(mapIntent);
 
         if (trip.getNotes() != null) {
             Intent bubbleIntent = new Intent(getApplicationContext(), BubbleService.class);

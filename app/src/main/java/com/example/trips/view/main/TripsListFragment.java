@@ -200,10 +200,21 @@ public class TripsListFragment extends Fragment {
                 .child("trips").child(trip.getId()).child("status");
         myRef.setValue(TripStatus.DONE);
 
-        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatLong().toString());
-        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-        mapIntent.setPackage("com.google.android.apps.maps");
-        startActivity(mapIntent);
+        Intent intent;
+        if (trip.getRoundTrip()) {
+            intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.google.com/maps/dir/" + trip.getStartPoint().getName() + "/" + trip.getEndPoint().getName() + "/" +
+                            trip.getStartPoint().getName()));
+        } else {
+            intent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("https://www.google.com/maps/dir/" + trip.getStartPoint().getName() + "/" + trip.getEndPoint().getName()));
+        }
+        startActivity(intent);
+
+//        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatLong().toString());
+//        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+//        mapIntent.setPackage("com.google.android.apps.maps");
+//        startActivity(mapIntent);
 
         if (trip.getNotes() != null) {
             Intent bubbleIntent = new Intent(getContext(), BubbleService.class);

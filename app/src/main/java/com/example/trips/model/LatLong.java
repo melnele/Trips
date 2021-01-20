@@ -1,5 +1,7 @@
 package com.example.trips.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 public
@@ -31,6 +33,7 @@ class LatLong implements Serializable {
         this.longitude = longitude;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return latitude + "," + longitude;

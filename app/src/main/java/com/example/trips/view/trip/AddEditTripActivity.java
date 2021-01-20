@@ -87,17 +87,20 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
         }
 
         btnAddTrip.setOnClickListener(v -> {
-            if (startAddress == null) {
-                Toast.makeText(getApplicationContext(), "start location is required", Toast.LENGTH_SHORT).show();
+            if (tripNameEditText.getText().toString().isEmpty()) {
+                Toast.makeText(getApplicationContext(), getString(R.string.name_required), Toast.LENGTH_SHORT).show();
+                return;
+            } else if (startAddress == null) {
+                Toast.makeText(getApplicationContext(), getString(R.string.start_required), Toast.LENGTH_SHORT).show();
                 return;
             } else if (endAddress == null) {
-                Toast.makeText(getApplicationContext(), "end location is required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.end_required), Toast.LENGTH_SHORT).show();
                 return;
             } else if (!dateSet) {
-                Toast.makeText(getApplicationContext(), "date is required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.date_required), Toast.LENGTH_SHORT).show();
                 return;
             } else if (!timeSet) {
-                Toast.makeText(getApplicationContext(), "time is required", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.time_required), Toast.LENGTH_SHORT).show();
                 return;
             }
             FirebaseDatabase database = DBUtil.getDB();
@@ -133,6 +136,9 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
                         .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                         .child("trips").child(trip.getId());
                 trip.setName(tripNameEditText.getText().toString());
+                if (!tripNameEditText.getText().toString().isEmpty()) {
+                    trip.setName(tripNameEditText.getText().toString());
+                }
                 if (startAddress != null) {
                     trip.setStartPoint(startAddress);
                 }
@@ -235,7 +241,7 @@ public class AddEditTripActivity extends AppCompatActivity implements DatePicker
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == permission_request_code) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-                Toast.makeText(this, "Permission denied by the user", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
             }
         }
     }

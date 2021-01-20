@@ -1,5 +1,7 @@
 package com.example.trips.model;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -99,6 +101,7 @@ public class Trip implements Serializable {
         this.roundTrip = roundTrip;
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "Trip{" +

@@ -18,7 +18,8 @@
         android:textColor="@color/black"
         android:ems="10"
         android:hint="@string/add_note"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:importantForAutofill="no" />
 
     <ImageView
         android:id="@+id/minusImageView"

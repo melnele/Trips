@@ -17,12 +17,10 @@
     <string name="edit">تعديل</string>
     <string name="notes">ملاحظات</string>
     <string name="add_note">اضف ملاحظتك</string>
-    <string name="add_your_notes">اضف ملاحظاتك</string>
     <string name="add_up_to">يمكنك إضافة حتى عشر ملاحظات</string>
     <string name="add_a_note">اضف ملاحظة</string>
     <string name="save_notes">احفظ الملاحظات</string>
     <string name="create_trip">قم بإضافة رحلة</string>
-    <string name="trip_details">تفاصيل الرحلة</string>
     <string name="edit_trip_details">تعديل تفاصيل الرحلة</string>
     <string name="round_trip">ذهابا وإيابا</string>
     <string name="delete">مسح</string>
@@ -37,4 +35,14 @@
     <string name="cancelled">الغيت</string>
     <string name="permission_message">اسمح لرحلات بالعرض فوق التطبيقات الاخري</string>
     <string name="permission_toast">التطبيق يحتاج إلي هذا الإذن لتفعيل خاصية التنبيه</string>
+    <string name="permission_denied">لم يتم منح الإذن من قبل المستخدم</string>
+    <string name="name_required">الرجاء إدخال اسم الرحلة</string>
+    <string name="start_required">الرجاء إدخال موقع بداية الرحلة</string>
+    <string name="end_required">الرجاء إدخال موقع نهاية الرحلة</string>
+    <string name="date_required">الرجاء إدخال تاريخ الرحلة</string>
+    <string name="time_required">الرجاء إدخال وقت الرحلة</string>
+    <string name="max_notes">لقد وصلت للحد الأقصي للملاحظات</string>
+    <string name="sync">مزامنة</string>
+    <string name="sign_out">تسجيل الخروج</string>
+    <string name="notification_message">انت بانتظار بدأ الرحلة</string>
 </resources>
