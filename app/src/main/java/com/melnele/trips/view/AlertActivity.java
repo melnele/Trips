@@ -1,4 +1,4 @@
-package com.example.trips.view;
+package com.melnele.trips.view;
 
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
@@ -18,15 +18,15 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import com.example.trips.R;
-import com.example.trips.model.Trip;
-import com.example.trips.model.TripStatus;
-import com.example.trips.utils.DBUtil;
+import com.melnele.trips.R;
+import com.melnele.trips.model.Trip;
+import com.melnele.trips.model.TripStatus;
+import com.melnele.trips.utils.DBUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import static com.example.trips.view.main.TripsAdapter.TRIP;
+import static com.melnele.trips.view.main.TripsAdapter.TRIP;
 
 public class AlertActivity extends AppCompatActivity {
     public static final String channelID = "channelID";

@@ -1,4 +1,4 @@
-package com.example.trips.view.trip;
+package com.melnele.trips.view.trip;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -23,13 +23,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.trips.R;
-import com.example.trips.model.Address;
-import com.example.trips.model.LatLong;
-import com.example.trips.model.Trip;
+import com.melnele.trips.R;
+import com.melnele.trips.model.Address;
+import com.melnele.trips.model.LatLong;
+import com.melnele.trips.model.Trip;
 
-import com.example.trips.utils.DBUtil;
-import com.example.trips.view.AlertActivity;
+import com.melnele.trips.utils.DBUtil;
+import com.melnele.trips.view.AlertActivity;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
@@ -46,7 +46,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.example.trips.view.main.TripsAdapter.TRIP;
+import static com.melnele.trips.view.main.TripsAdapter.TRIP;
 
 public class AddEditTripActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
     public static final String TRIP_ACTION = "TRIP_ACTION";

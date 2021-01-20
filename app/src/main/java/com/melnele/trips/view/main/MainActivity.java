@@ -1,10 +1,10 @@
-package com.example.trips.view.main;
+package com.melnele.trips.view.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.trips.R;
-import com.example.trips.view.trip.AddEditTripActivity;
+import com.melnele.trips.R;
+import com.melnele.trips.view.trip.AddEditTripActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -15,14 +15,13 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 
-import static com.example.trips.view.main.SectionsStateAdapter.TAB_TITLES;
-import static com.example.trips.view.trip.AddEditTripActivity.ADD_TRIP;
-import static com.example.trips.view.trip.AddEditTripActivity.TRIP_ACTION;
+import static com.melnele.trips.view.main.SectionsStateAdapter.TAB_TITLES;
+import static com.melnele.trips.view.trip.AddEditTripActivity.ADD_TRIP;
+import static com.melnele.trips.view.trip.AddEditTripActivity.TRIP_ACTION;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.trips.view.main;
+package com.melnele.trips.view.main;
 
 import android.app.AlarmManager;
 import android.app.AlertDialog;
@@ -19,14 +19,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.trips.R;
-import com.example.trips.model.Trip;
-import com.example.trips.model.TripStatus;
-import com.example.trips.utils.DBUtil;
-import com.example.trips.view.AlertActivity;
-import com.example.trips.view.BubbleService;
-import com.example.trips.view.trip.NoteActivity;
-import com.example.trips.view.trip.AddEditTripActivity;
+import com.melnele.trips.R;
+import com.melnele.trips.model.Trip;
+import com.melnele.trips.model.TripStatus;
+import com.melnele.trips.utils.DBUtil;
+import com.melnele.trips.view.AlertActivity;
+import com.melnele.trips.view.BubbleService;
+import com.melnele.trips.view.trip.NoteActivity;
+import com.melnele.trips.view.trip.AddEditTripActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,9 +38,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
-import static com.example.trips.view.main.TripsAdapter.TRIP;
-import static com.example.trips.view.trip.AddEditTripActivity.EDIT_TRIP;
-import static com.example.trips.view.trip.AddEditTripActivity.TRIP_ACTION;
+import static com.melnele.trips.view.main.TripsAdapter.TRIP;
+import static com.melnele.trips.view.trip.AddEditTripActivity.EDIT_TRIP;
+import static com.melnele.trips.view.trip.AddEditTripActivity.TRIP_ACTION;
 
 public class TripsListFragment extends Fragment {
     private int section;

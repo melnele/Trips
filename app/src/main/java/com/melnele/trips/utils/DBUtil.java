@@ -1,4 +1,4 @@
-package com.example.trips.utils;
+package com.melnele.trips.utils;
 
 import com.google.firebase.database.FirebaseDatabase;
 

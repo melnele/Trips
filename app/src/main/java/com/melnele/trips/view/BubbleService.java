@@ -1,4 +1,4 @@
-package com.example.trips.view;
+package com.melnele.trips.view;
 
 import android.app.Service;
 import android.content.Intent;
@@ -19,12 +19,12 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import com.example.trips.R;
-import com.example.trips.model.Trip;
+import com.melnele.trips.R;
+import com.melnele.trips.model.Trip;
 
 import java.util.Calendar;
 
-import static com.example.trips.view.main.TripsAdapter.TRIP;
+import static com.melnele.trips.view.main.TripsAdapter.TRIP;
 
 public class BubbleService extends Service {
     private View mFloatingView;

@@ -1,4 +1,4 @@
-package com.example.trips.view;
+package com.melnele.trips.view;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.trips.R;
-import com.example.trips.model.Trip;
-import com.example.trips.model.TripStatus;
-import com.example.trips.utils.DBUtil;
+import com.melnele.trips.R;
+import com.melnele.trips.model.Trip;
+import com.melnele.trips.model.TripStatus;
+import com.melnele.trips.utils.DBUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

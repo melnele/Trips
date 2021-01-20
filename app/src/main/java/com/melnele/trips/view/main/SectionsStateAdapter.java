@@ -1,4 +1,4 @@
-package com.example.trips.view.main;
+package com.melnele.trips.view.main;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.trips.R;
+import com.melnele.trips.R;
 
 
 public class SectionsStateAdapter extends FragmentStateAdapter {

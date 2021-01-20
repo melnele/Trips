@@ -1,4 +1,4 @@
-package com.example.trips;
+package com.melnele.trips;
 
 import org.junit.Test;
 

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "61708806860",
+    "firebase_url": "https://trips-f7d09-default-rtdb.firebaseio.com",
     "project_id": "trips-f7d09",
     "storage_bucket": "trips-f7d09.appspot.com"
   },
@@ -13,6 +14,59 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "61708806860-bh1ciga952lvtnqbc5uoa8gj2g9d2h4r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trips",
+            "certificate_hash": "99c7b612052f53d7f0bbbb059e54e494011152f3"
+          }
+        },
+        {
+          "client_id": "61708806860-lst9lpl4bv5soeot2o8otqs8mf7ul7nm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeSIGJ5emryZU2w3GYhxx1WtjHFuxPXhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "61708806860-lst9lpl4bv5soeot2o8otqs8mf7ul7nm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:61708806860:android:84e5cd19b9fc3d36eb7069",
+        "android_client_info": {
+          "package_name": "com.melnele.trips"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "61708806860-3esc9uqt6pnan473244vaobbp4dtj9h9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.melnele.trips",
+            "certificate_hash": "99c7b612052f53d7f0bbbb059e54e494011152f3"
+          }
+        },
+        {
+          "client_id": "61708806860-jpt65bgl6ilguamg3nn7jvgu63n9oniu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.melnele.trips",
+            "certificate_hash": "e774b09de68da6d981e25e3579bf3c823188f1c2"
+          }
+        },
         {
           "client_id": "61708806860-lst9lpl4bv5soeot2o8otqs8mf7ul7nm.apps.googleusercontent.com",
           "client_type": 3

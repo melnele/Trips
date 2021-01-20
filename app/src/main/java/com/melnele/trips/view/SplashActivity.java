@@ -1,12 +1,13 @@
-package com.example.trips.view;
+package com.melnele.trips.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
-import com.example.trips.utils.DBUtil;
-import com.example.trips.view.main.MainActivity;
+import com.melnele.trips.utils.DBUtil;
+import com.melnele.trips.view.main.MainActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,6 +53,8 @@ public class SplashActivity extends AppCompatActivity {
                 if (response == null) {
                     finish();
                 }
+                Log.i("TAG", "onActivityResult: " + response.getError().getMessage());
+
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.

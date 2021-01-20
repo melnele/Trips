@@ -1,4 +1,4 @@
-package com.example.trips.model;
+package com.melnele.trips.model;
 
 import java.io.Serializable;
 

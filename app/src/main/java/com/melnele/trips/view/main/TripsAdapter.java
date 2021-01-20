@@ -1,4 +1,4 @@
-package com.example.trips.view.main;
+package com.melnele.trips.view.main;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.trips.R;
-import com.example.trips.model.Trip;
-import com.example.trips.model.TripStatus;
+import com.melnele.trips.R;
+import com.melnele.trips.model.Trip;
+import com.melnele.trips.model.TripStatus;
 
 import java.text.DateFormat;
 import java.util.List;
