@@ -200,23 +200,30 @@ public class TripsListFragment extends Fragment {
                 .child("trips").child(trip.getId()).child("status");
         myRef.setValue(TripStatus.DONE);
 
-        Intent intent;
+        Uri.Builder uriBuilder = new Uri.Builder();
+        uriBuilder.encodedPath("https://www.google.com/maps/dir/");
+        uriBuilder.appendQueryParameter("api", "1");
+        uriBuilder.appendQueryParameter("origin", trip.getStartPoint().getName());
+
         if (trip.getRoundTrip()) {
-            intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.google.com/maps/dir/" + trip.getStartPoint().getName() + "/" + trip.getEndPoint().getName() + "/" +
-                            trip.getStartPoint().getName()));
+            uriBuilder.appendQueryParameter("destination", trip.getStartPoint().getName());
+            uriBuilder.appendQueryParameter("waypoints", trip.getEndPoint().getName());
         } else {
-            intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.google.com/maps/dir/" + trip.getStartPoint().getName() + "/" + trip.getEndPoint().getName()));
+            uriBuilder.appendQueryParameter("destination", trip.getEndPoint().getName());
         }
+
+//        uriBuilder.appendQueryParameter("dir_action", "navigate");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uriBuilder.build());
+        intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
         startActivity(intent);
 
+//        Uri.parse("https://www.google.com/maps/dir/" + trip.getStartPoint().getName() + "/" + trip.getEndPoint().getName() + "/" + trip.getStartPoint().getName())
 //        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + trip.getEndPoint().getLatLong().toString());
 //        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
 //        mapIntent.setPackage("com.google.android.apps.maps");
 //        startActivity(mapIntent);
 
-        if (trip.getNotes() != null) {
+        if (trip.getNotes() != null && getActivity() != null) {
             Intent bubbleIntent = new Intent(getContext(), BubbleService.class);
             bubbleIntent.putExtra(TRIP, trip);
             getActivity().startService(bubbleIntent);

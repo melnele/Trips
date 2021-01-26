@@ -52,8 +52,10 @@ public class SplashActivity extends AppCompatActivity {
             } else {
                 if (response == null) {
                     finish();
+                    return;
                 }
-                Log.i("TAG", "onActivityResult: " + response.getError().getMessage());
+                if (response.getError() != null)
+                    Log.i("TAG", "onActivityResult: " + response.getError().getMessage());
 
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
